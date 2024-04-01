@@ -30,7 +30,13 @@ def main():
         default=".",
         type=str,
     )
-    
+
+    parser.add_argument(
+        "--load_from",
+        default=None,
+        type=str,
+    )
+
     args = parser.parse_args()
 
     if not args.no_cuda:
@@ -42,12 +48,8 @@ def main():
         init_cfg(args.config_file)
 
     runner = Runner()
-    # import pickle
-    # state_dict = pickle.load(open("/mnt/disk/flowey/remote/JDet-debug/weights/state_dict.pkl", "rb"))
-    # tensor_stat_dict = dict()
-    # for k, v in state_dict.items():
-    #     tensor_stat_dict[k] = jt.array(v)
-    # runner.model.load_state_dict(tensor_stat_dict)
+    if args.load_from:
+        runner.load(args.load_from, model_only=True)
 
     if args.task == "train":
         runner.run()

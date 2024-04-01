@@ -42,3 +42,31 @@ class L1Loss(nn.Module):
             reduction=reduction,
             avg_factor=avg_factor)
         return loss_bbox
+
+@LOSSES.register_module()
+class WeightL1Loss(L1Loss):
+
+    def __init__(self,*args, array_weights=None, **kwargs):
+        super(WeightL1Loss, self).__init__(*args, **kwargs)
+        self.array_weights = array_weights
+
+    def execute(self,
+                pred,
+                target,
+                weight=None,
+                avg_factor=None,
+                reduction_override=None):
+        assert reduction_override in (None, 'none', 'mean', 'sum')
+        reduction = (
+            reduction_override if reduction_override else self.reduction)
+        if self.array_weights is not None:
+            assert weight is not None
+            assert len(self.array_weights) == weight.shape[-1]
+            weight = weight * jt.array(self.array_weights).reshape((1, -1))
+        loss_bbox = self.loss_weight * l1_loss(
+            pred,
+            target,
+            weight,
+            reduction=reduction,
+            avg_factor=avg_factor)
+        return loss_bbox
