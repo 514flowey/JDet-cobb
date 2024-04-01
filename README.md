@@ -4,7 +4,7 @@ Considerable efforts have been devoted to Oriented Object Detection (OOD). Howev
 
 ## Install
 ```shell
-git clone https://github.com/Jittor/JDet
+git clone https://github.com/514flowey/JDet-cobb.git
 cd JDet
 python -m pip install -r requirements.txt
 python setup.py develop
