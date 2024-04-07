@@ -2,6 +2,8 @@
 ## Abstract
 Considerable efforts have been devoted to Oriented Object Detection (OOD). However, one lasting issue regarding the discontinuity in Oriented Bounding Box (OBB) representation remains unresolved, which is an inherent bottleneck for extant OOD methods. This paper endeavors to completely solve this issue in a theoretically guaranteed manner and puts an end to the ad-hoc efforts in this direction. Prior studies typically can only address one of the two cases of discontinuity: rotation and aspect ratio, and often inadvertently introduce decoding discontinuity, e.g. Decoding Incompleteness (DI) and Decoding Ambiguity (DA) as discussed in literature. Specifically, we propose a novel representation method called **C**ontinuous **OBB** (**COBB**), which can be readily integrated into existing detectors e.g. Faster-RCNN as a plugin. It can theoretically ensure continuity in bounding box regression which to our best knowledge, has not been achieved in literature for rectangle-based object representation. For fairness and transparency of experiments, we have developed a modularized benchmark based on the open-source deep learning framework Jittor's detection toolbox JDet for OOD evaluation. On the popular DOTA dataset, by integrating Faster-RCNN as the same baseline model, our new method outperforms the peer method Gliding Vertex by 1.13\% mAP<sub>50</sub> (relative improvement 1.54\%), and 2.46\% mAP<sub>75</sub> (relative improvement 5.91\%), without any tricks.
 
+(accepted by CVPR 2024)
+
 ## Install
 ```shell
 git clone https://github.com/514flowey/JDet-cobb.git
@@ -32,14 +34,14 @@ JDet defines the used model, dataset and training/testing method by `config-file
 ### Train
 ```shell
 CUDA_VISIBLE_DEVICES=0 JITTOR_HOME=build/ python tools/run_net.py \
---config-file configs/benchmark/faster_rcnn/faster_rcnn_obb_r50_fpn_1x_dota.py
+--config-file configs/faster_rcnn/faster_rcnn_obb_r50_fpn_1x_dota.py
 ```
 
 ### Test
 If you want to test the downloaded trained models, please use ```--load_from {you_checkpointspath}```.
 ```shell
 CUDA_VISIBLE_DEVICES=0 JITTOR_HOME=build/ python tools/run_net.py \
- --config-file configs/benchmark/roi_transformer/roi_transformer_obb_r50_fpn_1x_dota.py \
+ --config-file configs/roi_transformer/roi_transformer_obb_r50_fpn_1x_dota.py \
  --load_from weights/checkpoints/roi_transformer_obb_r50_fpn_1x_dota_ckpt12.pkl \
  --task test
 ```
