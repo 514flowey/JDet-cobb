@@ -19,4 +19,9 @@ from . import h2rbox_head
 from . import rsdet_head
 from . import rotated_atss_head
 from . import rotated_reppoints_head
+from . import convfc_roi_head
+from . import cobb_roi_head
+from . import gliding_roi_head
+from . import new_fasterrcnn_head
+
 __all__ = []
